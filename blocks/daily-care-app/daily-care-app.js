@@ -437,7 +437,7 @@ function demoMenu(){
    <div class="drow"><div><b>Start over</b><p>New member sign-up, or Sam 12 days in</p></div><div class="r"><button class="dbtn" data-act="new">New member</button><button class="dbtn" data-act="reset">Reset to Sam</button></div></div>
   </div></details>`;
 }
-function renderBars(){
+function renderBars(){const ab=$('#appBar');if(ab){ab.innerHTML='';ab.style.display='none';}return;
   const day=`<span class="daychip">${ic('clock',14)}Day ${S.day}</span>`;
   $('#appBar').innerHTML=`<div class="tb-l"><span class="hico">${ic('phone',16)}</span><div><b style="font-size:14.5px">Member app</b><div class="muted" style="font-size:12px">${S.onboarded?`Signed in as ${esc(S.name)} · tap anything in the phone`:'Sign-up flow · try it, or explore as Sam'}</div></div></div>
    <div class="tb-r">${day}<button class="dbtn" data-act="tour">${ic('play',12).replace('class="i"','class="i" style="display:inline;vertical-align:-1px;margin-right:4px"')}Tour</button>${demoMenu()}</div>`;
@@ -617,7 +617,7 @@ function insights(){
  const tabs=[['patterns','Patterns'],['numbers','My numbers'],['checks','Check-ins']],st=stats();let body='';
  if(S.insTab==='patterns'){
   if(!has('bp')||!has('mind'))body=`<div class="pc" data-f="insight"><h4>Add blood pressure and stress</h4><p style="font-size:12.3px;color:var(--ink-2);margin-top:3px">The stress and blood pressure pattern needs both programs. Your other numbers are under My numbers.</p></div>`;
-  else if(st.days<10||!st.nHi||!st.nLo)body=`<div class="pc" data-f="insight"><h4>Not enough data yet</h4><p style="font-size:12.3px;color:var(--ink-2);margin-top:3px">We show a pattern only after 10 days with both a stress check and a blood pressure reading (you have ${st.days}). Fewer days could mislead. Try <b>Demo controls › +3 days</b>.</p></div>`;
+  else if(st.days<10||!st.nHi||!st.nLo)body=`<div class="pc" data-f="insight"><h4>Not enough data yet</h4><p style="font-size:12.3px;color:var(--ink-2);margin-top:3px">We show a pattern only after 10 days with both a stress check and a blood pressure reading (you have ${st.days}). Fewer days could mislead.</p></div>`;
   else body=`<div class="pc chart" data-f="insight"><div class="ailine">${ic('spark',13)}DocIQ found a pattern</div>
    <h4 class="ih">Your blood pressure is about ${st.hi-st.lo} points higher on stressful days</h4>
    <div class="cmp"><div style="background:var(--hi-2)"><b style="color:var(--hi)">${st.hi}</b><span>Stressful days (${st.nHi})</span></div><div style="background:var(--surface-2)"><b>${st.lo}</b><span>Other days (${st.nLo})</span></div></div>
@@ -663,7 +663,7 @@ function sheet(){
     <button class="pb full" data-act="nav:device">Open Device</button><button class="pb sec full" data-act="human">Talk to a person</button>`;}
   if(k==='plan'){c=`<h4>My plan</h4>
     <div class="vs"><div><b>Plan:</b> ${S.pay==='plan'?'Northwind Logistics benefit · $0 to you':'Daily Care · $33 a month'}</div><div><b>Programs:</b> ${S.conds.map(x=>CONDS.find(c=>c.id===x).t).join(', ')||'none'}</div><div><b>Next charge:</b> ${S.pay==='plan'?'None':'Day '+(S.day+18)}</div></div>
-    ${S.pay==='self'?`<button class="pb sec full" data-act="toast:Plan paused for 1 month. No charge until then.">Pause for a month</button><button class="pb sec full" data-act="toast:Cancelled. You keep access until the end of this month. No phone call needed.">Cancel plan</button>`:'<p>Your employer pays for this, so there is nothing to cancel. Switch "Who pays" in Demo controls to see self-serve cancel.</p>'}`;}
+    ${S.pay==='self'?`<button class="pb sec full" data-act="toast:Plan paused for 1 month. No charge until then.">Pause for a month</button><button class="pb sec full" data-act="toast:Cancelled. You keep access until the end of this month. No phone call needed.">Cancel plan</button>`:'<p>Your employer pays for this, so there is nothing to cancel.</p>'}`;}
   if(k==='sleep'){const qs=['Do you snore loudly?','Do you feel tired during the day?','Has anyone seen you stop breathing in your sleep?'],a=U.sleepA;
     c=a.length>=3?`<h4>Thanks, ${esc(S.name)}</h4><p>${a.filter(Boolean).length>=2?'Your answers suggest it may be worth checking for sleep apnea. A sleep program can arrange a home sleep test with a provider. It would be added right here in this app.':'Your answers look low risk. We will check again in 3 months.'}</p>${a.filter(Boolean).length>=2?`<button class="pb full" data-act="toast:Sleep program added. A provider will reach out (demo).">Add the sleep program</button>`:''}`
      :`<h4>Sleep check · ${a.length+1} of 3</h4><p>${qs[a.length]}</p><div style="display:flex;gap:8px"><button class="pb" style="flex:1" data-act="sleepA:1">Yes</button><button class="pb sec" style="flex:1" data-act="sleepA:0">No</button></div>`;}
@@ -738,7 +738,7 @@ function act(a,el){
         S.onboarded=true;S.name=o.name||'Alex';S.conds=CONDS.map(c=>c.id).filter(id=>o.conds.includes(id));S.combo=o.combo;S.budget=o.budget;S.share=o.share;S.lastGlucose=S.day;S.scr='today';S.chat=[];
         const c=myCombo();if(has('glu')&&!verified(c)){S.reports.push({day:S.day,combo:c.id,text:'New member signed up on an unverified phone'});}
         log('member',`${S.name} signed up: ${S.conds.join(', ')}; phone ${c.phone} · ${c.os}${has('glu')?(verified(c)?' (verified)':' (not verified yet)'):''}.`);
-        toast('Welcome! Use Demo controls › +1 day to move time forward.');break;}
+        toast('Welcome!');break;}
       break;}
     /* today */
     case 'done':
