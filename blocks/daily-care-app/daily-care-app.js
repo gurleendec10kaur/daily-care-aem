@@ -450,7 +450,7 @@ function onboarding(){
   if(o.step===0)return `<div class="welcome"><span class="big-logo">${ic('heart',34)}</span><h3>Daily Care</h3>
     <p class="obp">One simple plan for blood pressure, diabetes, weight and stress. DocIQ helps every day, with real people behind it.</p>
     <button class="pb full" data-act="ob:next" data-f="obstart">Create my account</button>
-    <button class="pb sec full" data-act="ob:sam">Explore as Sam, 12 days in</button>
+    <button class="pb sec full" data-act="ob:sam">Explore as Sam</button>
     <p class="muted" style="font-size:11.5px">Demo only: no real account is created, and data stays in this browser.</p></div>`;
   const top=`<div class="obtop"><button data-act="ob:back">‹ Back</button><span class="obsteps">${[1,2,3,4].map(i=>`<i class="${i<=o.step?'on':''}"></i>`).join('')}</span><span class="muted" style="font-size:12px">${o.step} of 4</span></div>`;
   if(o.step===1)return `<div class="ob">${top}<h3 class="obh">What should we call you, and what are you managing?</h3>
@@ -543,7 +543,7 @@ function device(){
   let h=`<div class="ttl">Device</div>`;
   if(!has('glu'))h+=`<div class="pc info"><b style="font-size:13.5px">Your programs don't use the plug-in meter</b><p style="font-size:12.3px;color:var(--ink-2);margin-top:3px">Your cuff syncs on its own. Phone check below still helps if you add diabetes later.</p></div>`;
   h+=`<div class="pc ${v?'ok':'bad'}" data-f="status"><div class="rowc"><h4>${ic('phone',15).replace('class="i"','class="i" style="display:inline;vertical-align:-2px"')} My phone</h4><span class="pill ${v?'ok':'bad'}">${v?'Verified':'Not verified yet'}</span></div>
-    <div style="margin-top:6px"><div class="kv"><span>Phone</span><b>${esc(c.phone)}</b></div><div class="kv"><span>Software</span><b>${esc(c.os)}</b></div><div class="kv"><span>Meter plug</span><b>${esc(c.conn)}</b></div>${has('glu')?`<div class="kv"><span>Last meter reading</span><b>Day ${S.lastGlucose}</b></div>`:''}</div>
+    <div style="margin-top:6px"><div class="kv"><span>Phone</span><b>${esc(c.phone)}</b></div><div class="kv"><span>Software</span><b>${esc(c.os)}</b></div><div class="kv"><span>Meter plug</span><b>${esc(c.conn)}</b></div>${has('glu')?`<div class="kv"><span>Last meter reading</span><b>${S.day-S.lastGlucose<=0?'Today':S.day-S.lastGlucose===1?'Yesterday':(S.day-S.lastGlucose)+' days ago'}</b></div>`:''}</div>
     ${v?'':`<div class="steps">${STAGES.map((s,i)=>`<div class="${i<=c.stage?'on':''}"><b></b>${s}</div>`).join('')}</div>`}
     ${has('glu')?`<button class="pb sec" style="margin-top:8px" data-act="testMeter">Test my meter</button>`:''}</div>`;
   if(has('glu')&&(S.blocked||!v))h+=`<div class="pc" data-f="fallback"><h4>Keep recording while we finish testing</h4><p style="font-size:12.3px;color:var(--ink-2);margin-top:3px">Your meter can't record on this phone until testing and sign-off are done. Meanwhile:</p>
@@ -662,7 +662,7 @@ function sheet(){
     <div class="vs"><div><b>1.</b> Remove a thick phone case</div><div><b>2.</b> Check your phone is verified in Device</div><div><b>3.</b> Close and reopen the app, then use a new strip</div><div><b>4.</b> Still stuck? A person sends a replacement meter if needed</div></div>
     <button class="pb full" data-act="nav:device">Open Device</button><button class="pb sec full" data-act="human">Talk to a person</button>`;}
   if(k==='plan'){c=`<h4>My plan</h4>
-    <div class="vs"><div><b>Plan:</b> ${S.pay==='plan'?'Northwind Logistics benefit · $0 to you':'Daily Care · $33 a month'}</div><div><b>Programs:</b> ${S.conds.map(x=>CONDS.find(c=>c.id===x).t).join(', ')||'none'}</div><div><b>Next charge:</b> ${S.pay==='plan'?'None':'Day '+(S.day+18)}</div></div>
+    <div class="vs"><div><b>Plan:</b> ${S.pay==='plan'?'Northwind Logistics benefit · $0 to you':'Daily Care · $33 a month'}</div><div><b>Programs:</b> ${S.conds.map(x=>CONDS.find(c=>c.id===x).t).join(', ')||'none'}</div><div><b>Next charge:</b> ${S.pay==='plan'?'None':'In 18 days'}</div></div>
     ${S.pay==='self'?`<button class="pb sec full" data-act="toast:Plan paused for 1 month. No charge until then.">Pause for a month</button><button class="pb sec full" data-act="toast:Cancelled. You keep access until the end of this month. No phone call needed.">Cancel plan</button>`:'<p>Your employer pays for this, so there is nothing to cancel.</p>'}`;}
   if(k==='sleep'){const qs=['Do you snore loudly?','Do you feel tired during the day?','Has anyone seen you stop breathing in your sleep?'],a=U.sleepA;
     c=a.length>=3?`<h4>Thanks, ${esc(S.name)}</h4><p>${a.filter(Boolean).length>=2?'Your answers suggest it may be worth checking for sleep apnea. A sleep program can arrange a home sleep test with a provider. It would be added right here in this app.':'Your answers look low risk. We will check again in 3 months.'}</p>${a.filter(Boolean).length>=2?`<button class="pb full" data-act="toast:Sleep program added. A provider will reach out (demo).">Add the sleep program</button>`:''}`
@@ -726,7 +726,7 @@ function act(a,el){
     /* onboarding */
     case 'ob':{
       const o=S.ob,[sub,arg]=v.split(':');
-      if(sub==='sam'){const view=S.view;S=seed('sam');S.view=view;toast('Signed in as Sam, 12 days in');break;}
+      if(sub==='sam'){const view=S.view;S=seed('sam');S.view=view;toast('Exploring as Sam');break;}
       if(sub==='next'){
         if(o.step===1){const n=($('#obName')||{}).value;o.name=(n||'').trim();if(!o.name){toast('Add your first name');break;}if(!o.conds.length){toast('Choose at least one');break;}}
         o.step=Math.min(4,o.step+1);break;}
