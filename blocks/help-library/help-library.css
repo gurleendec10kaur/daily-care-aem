@@ -1,0 +1,39 @@
+.help-library .help-library-search {
+  width: 100%;
+  max-width: 520px;
+  padding: 10px 14px;
+  font: inherit;
+  border: 1px solid var(--dark-color, #ccc);
+  border-radius: 8px;
+}
+
+.help-library .help-library-count {
+  margin: 8px 0 16px;
+  font-size: var(--body-font-size-xs, 14px);
+  color: #555;
+}
+
+.help-library .help-library-section h3 {
+  margin: 24px 0 8px;
+}
+
+.help-library .help-library-item {
+  border: 1px solid #e0e6ed;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  background: #fff;
+}
+
+.help-library .help-library-item summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.help-library .help-library-item p {
+  margin: 8px 0 0;
+}
+
+.help-library [hidden] {
+  display: none;
+}
