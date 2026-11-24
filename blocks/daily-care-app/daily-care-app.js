@@ -406,7 +406,7 @@ const WHY={
 function whyHtml(k){
   const w=WHY[k];
   return `<div><div class="eyebrow">Why this screen</div><h2 style="margin-top:4px">${w.t}</h2></div>
-   <div class="pbm"><div class="p"><small>The problem</small>${w.p}</div><div class="b"><small>What we built</small>${w.b}</div><div class="m2"><small>How we know it works</small>${w.m}</div></div>
+   <div class="pbm"><div class="p"><small>The problem</small>${w.p}</div><div class="b"><small>What I built</small>${w.b}</div><div class="m2"><small>How we know it works</small>${w.m}</div></div>
    ${w.f.length?`<div><div class="wh">On this screen · tap to see it</div><div class="feat">${w.f.map((f,i)=>`<button class="fchip" data-find="${k}:${i}">${f[1]}<span class="ph ${f[0]}">${PHASE[f[0]]}</span></button>`).join('')}</div></div>`:''}
    <div>${w.vs.length?`<div class="wh">What competitors do</div><div class="vs">${w.vs.map(v=>`<div><b>${v[0]}:</b> ${v[1]}</div>`).join('')}</div>`:''}
     <div class="win"><small>Our angle</small>${w.win}</div></div>
