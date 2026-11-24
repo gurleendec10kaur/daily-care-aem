@@ -504,7 +504,7 @@ function planItems(){
 const MOODS=[['😌','Calm'],['🙂','Fine'],['😐','Some'],['😟','High'],['😫','Very high']];
 function today(){
   const PL=planItems(),n=PL.filter(p=>p.done).length,pct=PL.length?Math.round(n/PL.length*100):0,c=myCombo(),st=stats();
-  let h=`<div class="hello"><div><small>Day ${S.day} · Good morning</small><h3>Hi ${esc(S.name)}</h3></div><span class="av" aria-label="Profile">${esc((S.name||'?')[0].toUpperCase())}</span></div>`;
+  let h=`<div class="hello"><div><small>Good morning</small><h3>Hi ${esc(S.name)}</h3></div><span class="av" aria-label="Profile">${esc((S.name||'?')[0].toUpperCase())}</span></div>`;
   Object.entries(S.notified).forEach(([id,kind])=>{const cc=combo(id);
     h+=`<div class="pc ok"><div class="rowc"><b style="font-size:13.5px">✅ ${kind==='safe'?'Safe to update to '+esc(cc.os):'Your phone is now verified'}</b><button class="dbtn" style="padding:2px 8px" data-act="dismissNote:${id}" aria-label="Dismiss">✕</button></div><p style="font-size:12.3px;color:var(--ink-2);margin-top:3px">${esc(cc.phone)} on ${esc(cc.os)} passed testing and a person signed it off. Your meter works with it.</p></div>`;});
   h+=hero();
